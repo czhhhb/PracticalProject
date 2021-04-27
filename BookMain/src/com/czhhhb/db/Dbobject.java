@@ -13,7 +13,7 @@ public class Dbobject {
         String driver = "com.mysql.cj.jdbc.Driver";
         String url = "jdbc:mysql://localhost:3306/czhhhb?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone = GMT";
         String user = "root";
-        String pwd = "123456";//修改成你自己数据库的密码
+        String pwd = "root";//修改成你自己数据库的密码
         try {
             Class.forName(driver);
             this.setConn(DriverManager.getConnection(url, user, pwd));
@@ -73,6 +73,40 @@ public class Dbobject {
                 e1.printStackTrace();
             }
             return booklist;
+        }
+
+    }
+
+    public int delete(String name)  {
+        //删除数据  删除成功返回1，删除失败返回0
+        try {
+            if(this.SeekBook(name).size()==1) {
+                this.connect();
+                String sql = "delete from library where name =?";
+                PreparedStatement pstmt;
+                pstmt = conn.prepareStatement(sql);
+                pstmt.setString(1, name);
+                pstmt.execute();
+                pstmt.close();
+                conn.close();
+                System.out.println("删除成功");
+                return 1;
+            }
+            else {
+                System.out.println("删除失败");
+                return 0;
+            }
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            System.out.println("删除报错");
+            e.printStackTrace();
+            try {
+                conn.close();
+            } catch (SQLException e1) {
+                // TODO Auto-generated catch block
+                e1.printStackTrace();
+            }
+            return 0;
         }
 
     }
