@@ -34,24 +34,26 @@ public class Dbobject {
         this.conn = conn;
     }
 
-    public ArrayList<Book> SeekBook(String bookname) {//根据具体序号查询是否有这本书
+
+    //模糊查询
+    public ArrayList<Book> SerchBook(String bookname) {//根据具体序号查询是否有这本书
         ArrayList<Book> booklist = new ArrayList<Book>();//返回学生列表根据列表大小判断有没有找到
         this.connect();
         try {
-            String sql = "select * from library where name=" + bookname;
-            System.out.println(bookname);
+            String sql = "select * from book where name like '%"+bookname+"%'";
+            System.out.println(sql);
             Statement stmt = null;
             stmt = this.conn.createStatement();
             ResultSet rs = null;
             rs = stmt.executeQuery(sql);
             if (rs.isBeforeFirst()) {
-                System.out.println("书名\t \t价格\t\t评价数\t\t");
+                System.out.println("编号\t \t书名\t\tIBSN\t\t");
                 while (rs.next()) {
                     Book book = new Book();
                     book.setName(rs.getString("name"));
-                    book.setPrice(rs.getString("price"));
-                    book.setEvaluate(rs.getString("evaluate"));
-                    System.out.println("书名" + book.getName() + "\t \t价格" + book.getPrice() + "\t\t评价数" + book.getEvaluate());
+                    book.setPrice(rs.getString("Price"));
+                    book.setSell(rs.getString("Sell"));
+                    System.out.println("书名" + book.getName() + "\t \t价格" + book.getPrice() + "\t\t销量" + book.getSell());
                     booklist.add(book);
                 }
                 System.out.println("查询成功");
@@ -77,8 +79,4 @@ public class Dbobject {
 
     }
 
-    //public ArrayList<Book> SeekBook(String booknum)
-    //上面的这个查看编号方法是我自己写的 你们可以直接去调用
-    //比如说要是添加书本 你总要判断添加书本的编号在不在数据库里面把 就可以调用我这个函数查看
-    //其他自己数据库函数就对照我这个来写 比如说写AddBook
 }

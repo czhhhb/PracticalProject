@@ -3,8 +3,13 @@ package com.czhhhb.model;
 public class Book {
     private String name;
     private String price;
-    private String evaluate;
+    private String sell;
 
+    public Book() {
+        this.name = name;
+        this.price = price;
+        this.sell = sell;
+    }
     public String getName() {
         return name;
     }
@@ -21,20 +26,11 @@ public class Book {
         this.price = price;
     }
 
-    public String getEvaluate() {
-        return evaluate;
+    public String getSell() {
+        return sell;
     }
 
-    public void setEvaluate(String evaluate) {
-        this.evaluate = evaluate;
-    }
-
-    public Book() {
-    }
-
-    public Book(String name, String price, String evaluate) {
-        this.name = name;
-        this.price = price;
-        this.evaluate = evaluate;
+    public void setSell(String sell) {
+        this.sell = sell;
     }
 }
